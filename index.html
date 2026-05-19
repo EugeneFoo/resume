@@ -199,7 +199,9 @@ body::before{
 .job.active::before,.job:hover::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 10px rgba(0,212,255,0.4);}
 .job-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;}
 .job-role{font-size:15px;font-weight:500;color:var(--text);}
-.job-company{font-size:13px;color:var(--accent);margin-top:2px;font-family:'Space Mono',monospace;}
+.job-company{font-size:13px;color:var(--accent);margin-top:2px;font-family:'Space Mono',monospace;position:relative;display:inline-block;}
+.job-company .tooltip{position:absolute;bottom:125%;left:0;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:11px;padding:5px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:50;font-family:'Space Mono',monospace;}
+.job-company:hover .tooltip{opacity:1;}
 .job-period{font-size:11px;color:var(--muted);white-space:nowrap;margin-top:3px;font-family:'Space Mono',monospace;}
 .current-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(16,185,129,0.1);color:var(--green);font-size:9px;font-weight:500;padding:2px 8px;border-radius:4px;letter-spacing:1px;margin-left:8px;vertical-align:middle;text-transform:uppercase;border:1px solid rgba(16,185,129,0.2);font-family:'Space Mono',monospace;}
 .current-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
@@ -242,6 +244,21 @@ body::before{
   .nav{padding:0.5rem;}
   .skill-row{grid-template-columns:1fr;}
 }
+
+/* BACK TO TOP */
+#back-top{
+  position:fixed;bottom:2rem;right:1.2rem;z-index:1000;
+  width:38px;height:38px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--accent);font-size:16px;
+  transition:all 0.2s;opacity:0;pointer-events:none;
+  box-shadow:0 0 10px rgba(0,212,255,0.1);
+}
+#back-top.visible{opacity:1;pointer-events:all;}
+#back-top:hover{box-shadow:0 0 16px rgba(0,212,255,0.3);}
+/* KEYBOARD HINT */
+.kbd-hint{display:inline-block;background:var(--surface2);border:1px solid var(--border);border-radius:3px;font-size:9px;padding:1px 5px;color:var(--muted);font-family:'Space Mono',monospace;margin-left:4px;vertical-align:middle;}
 </style>
 
 </head>
@@ -262,7 +279,7 @@ body::before{
         <span class="copy-toast" id="copy-toast">Copied!</span>
       </span>
       <a href="https://eugenefoo.dev" class="hero-contact" target="_blank"><i class="ti ti-world"></i> eugenefoo.dev</a>
-      <span class="hero-contact"><i class="ti ti-map-pin"></i> Singaporean</span>
+      <span class="hero-contact"><i class="ti ti-id-badge"></i> Singaporean</span>
     </div>
     <div class="status-dot">AVAILABLE FOR OPPORTUNITIES</div>
   </div>
@@ -270,17 +287,17 @@ body::before{
 
 <nav class="nav fade-in">
   <div class="nav-pills">
-    <button class="nav-pill active" onclick="showSection('summary',this)">Summary</button>
-    <button class="nav-pill" onclick="showSection('experience',this)">Experience</button>
-    <button class="nav-pill" onclick="showSection('skills',this)">Skills</button>
-    <button class="nav-pill" onclick="showSection('education',this)">Education</button>
+    <button class="nav-pill active" onclick="showSection('summary',this)">Summary<span class="kbd-hint">1</span></button>
+    <button class="nav-pill" onclick="showSection('experience',this)">Experience<span class="kbd-hint">2</span></button>
+    <button class="nav-pill" onclick="showSection('skills',this)">Skills<span class="kbd-hint">3</span></button>
+    <button class="nav-pill" onclick="showSection('education',this)">Education<span class="kbd-hint">4</span></button>
   </div>
 
 </nav>
 
 <div id="section-summary" class="section visible fade-in">
   <div class="section-title">Profile</div>
-  <p class="summary-text">Software Engineer and Team Lead with <strong>13+ years</strong> of experience across mobile, web, and enterprise platforms. Currently at <strong>GovTech Singapore</strong>, leading one of the development teams and working with BAs and POs to deliver ServiceNow ITSM solutions. Certified in <strong>ServiceNow CSA</strong> and <strong>ITIL V4</strong>.</p>
+  <p class="summary-text">Software Engineer and Team Lead with <strong>13+ years</strong> of experience across mobile, web, and enterprise platforms. Currently at <strong>GovTech Singapore</strong>, leading one of the development teams and working with BAs and POs to deliver ServiceNow ITSM solutions. Certified in <strong>ServiceNow CSA</strong> and <strong>ITIL V4</strong>.<br><br>Open to <strong>senior engineer or team lead roles</strong> in enterprise, government, or product-driven tech teams — particularly where ServiceNow, full-stack, or platform engineering is involved. Also exploring a <strong>mid-career switch into AI Engineering</strong>, leveraging existing experience with Azure AI services and chatbot development.</p>
   <div class="stat-row">
     <div class="stat-card"><div class="stat-num" data-target="13">0</div><div class="stat-label">Years exp.</div></div>
     <div class="stat-card"><div class="stat-num" data-target="6">0</div><div class="stat-label">Companies</div></div>
@@ -303,7 +320,7 @@ body::before{
     <!-- GovTech -->
     <div class="job active" onclick="toggleJob(this)">
       <div class="job-header">
-        <div><div class="job-role">Software Engineer / Team Lead <span class="current-badge">Current</span></div><div class="job-company">Government Technology Agency (GovTech) · Singapore</div></div>
+        <div><div class="job-role">Software Engineer / Team Lead <span class="current-badge">Current</span></div><div class="job-company">Government Technology Agency (GovTech) · Singapore<span class="tooltip">Government Technology Agency · Public Sector · ~3,000 staff</span></div></div>
         <div class="job-period">Dec 2022 – Present &nbsp;·&nbsp; 2 yrs 5 mths</div>
       </div>
       <div class="expand-hint">› click to expand</div>
@@ -322,7 +339,7 @@ body::before{
     <!-- POPULAR -->
     <div class="job" onclick="toggleJob(this)">
       <div class="job-header">
-        <div><div class="job-role">Software Engineer</div><div class="job-company">POPULAR Book Co. Pte Ltd · Singapore</div></div>
+        <div><div class="job-role">Software Engineer</div><div class="job-company">POPULAR Book Co. Pte Ltd · Singapore<span class="tooltip">Retail & Publishing · Consumer Tech · Listed company</span></div></div>
         <div class="job-period">Oct 2019 – Nov 2022 &nbsp;·&nbsp; 3 yrs 2 mths</div>
       </div>
       <div class="expand-hint">› click to expand</div>
@@ -356,7 +373,7 @@ body::before{
     <!-- Jabil Green Point -->
     <div class="job" onclick="toggleJob(this)">
       <div class="job-header">
-        <div><div class="job-role">Engineer II</div><div class="job-company">Jabil Green Point (Taiwan Green Point) · Taiwan</div></div>
+        <div><div class="job-role">Engineer II</div><div class="job-company">Jabil Green Point · Taiwan<span class="tooltip">Electronics Manufacturing · Global MNC · Taiwan HQ</span></div></div>
         <div class="job-period">Nov 2015 – Aug 2018 &nbsp;·&nbsp; 2 yrs 10 mths</div>
       </div>
       <div class="expand-hint">› click to expand</div>
@@ -374,7 +391,7 @@ body::before{
     <!-- Ghim Li -->
     <div class="job" onclick="toggleJob(this)">
       <div class="job-header">
-        <div><div class="job-role">Programmer</div><div class="job-company">Ghim Li Global Pte Ltd · Singapore</div></div>
+        <div><div class="job-role">Programmer</div><div class="job-company">Ghim Li Global Pte Ltd · Singapore<span class="tooltip">Apparel Manufacturing · Supply Chain Tech · SGX Listed</span></div></div>
         <div class="job-period">Dec 2013 – Oct 2015 &nbsp;·&nbsp; 1 yr 11 mths</div>
       </div>
       <div class="expand-hint">› click to expand</div>
@@ -392,7 +409,7 @@ body::before{
     <!-- IFCA -->
     <div class="job" onclick="toggleJob(this)">
       <div class="job-header">
-        <div><div class="job-role">Consultant / Software Engineer</div><div class="job-company">IFCA System (JB) Sdn. Bhd · Malaysia</div></div>
+        <div><div class="job-role">Consultant / Software Engineer</div><div class="job-company">IFCA System (JB) Sdn. Bhd · Malaysia<span class="tooltip">Enterprise ERP Software · Property & Construction</span></div></div>
         <div class="job-period">Jun 2011 – Sep 2012 &nbsp;·&nbsp; 1 yr 4 mths</div>
       </div>
       <div class="expand-hint">› click to expand</div>
@@ -409,7 +426,7 @@ body::before{
     <!-- MegaPOS -->
     <div class="job" onclick="toggleJob(this)">
       <div class="job-header">
-        <div><div class="job-role">Solution Specialist</div><div class="job-company">MegaPOS</div></div>
+        <div><div class="job-role">Solution Specialist</div><div class="job-company">MegaPOS · Singapore<span class="tooltip">Point-of-Sale Solutions · Retail Technology</span></div></div>
         <div class="job-period">Jun 2010 – Feb 2011 &nbsp;·&nbsp; 9 mths</div>
       </div>
       <div class="expand-hint">› click to expand</div>
@@ -451,14 +468,15 @@ body::before{
 <div id="section-education" class="section fade-in">
   <div class="section-title">Education</div>
   <div>
-    <div class="edu-card"><div><div class="edu-degree">Bachelor of Computer Science / Information Technology</div><div class="edu-school">Campbell University &nbsp;<span style="font-size:10px;color:var(--accent);font-family:'Space Mono',monospace;">(US)</span></div></div><div class="edu-year">2010</div></div>
-    <div class="edu-card"><div><div class="edu-degree">Advanced / Higher Diploma in Computer Science / IT</div><div class="edu-school">Tunku Abdul Rahman College &nbsp;<span style="font-size:10px;color:var(--accent);font-family:'Space Mono',monospace;">(MY)</span></div></div><div class="edu-year">2010</div></div>
+    <div class="edu-card"><div><div class="edu-degree">Bachelor of Computer Science / Information Technology</div><div class="edu-school">Campbell University, United States</div></div><div class="edu-year">2010</div></div>
+    <div class="edu-card"><div><div class="edu-degree">Advanced / Higher Diploma in Computer Science / IT</div><div class="edu-school">Tunku Abdul Rahman College, Malaysia</div></div><div class="edu-year">2010</div></div>
   </div>
   <div class="section-title" style="margin-top:2rem;">Languages</div>
-  <div class="lang-row"><span class="lang-pill">English</span><span class="lang-pill">Mandarin</span><span class="lang-pill">Bahasa Malaysia</span></div>
+  <div class="lang-row"><span class="lang-pill">Mandarin &nbsp;<span style="color:var(--accent);font-size:10px;">9</span></span><span class="lang-pill">English &nbsp;<span style="color:var(--accent);font-size:10px;">8</span></span><span class="lang-pill">Bahasa Melayu &nbsp;<span style="color:var(--accent);font-size:10px;">6</span></span></div>
 </div>
 
-<div class="resume-footer">Eugene Foo Yong Chen &nbsp;·&nbsp; Software Engineer &nbsp;·&nbsp; Singapore</div>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top"><i class="ti ti-arrow-up"></i></button>
+<div class="resume-footer">Eugene Foo Yong Chen &nbsp;·&nbsp; Software Engineer &nbsp;·&nbsp; Singapore &nbsp;·&nbsp; <span style="color:var(--accent)">Last updated: May 2026</span></div>
 </div>
 
 <script>
@@ -573,6 +591,21 @@ function filterSkills(cat,btn){
 
 // INIT
 animateCounters();animateBars();
+
+// BACK TO TOP
+window.addEventListener('scroll',()=>{
+  const btn=document.getElementById('back-top');
+  btn.classList.toggle('visible', window.scrollY > 300);
+});
+
+// KEYBOARD NAV (1/2/3/4)
+document.addEventListener('keydown', e => {
+  const map = {'1':'summary','2':'experience','3':'skills','4':'education'};
+  if(map[e.key]) {
+    const btn = document.querySelectorAll('.nav-pill')[parseInt(e.key)-1];
+    showSection(map[e.key], btn);
+  }
+});
 
 </script>
 </body>
